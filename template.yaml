@@ -206,6 +206,34 @@ Resources:
             Principal: "*"
             Resource: "arn:aws:s3:::adventures-of-wilbur-images/*"
 
+  AdventuresOfWilburCloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          OriginRequestPolicyId: 95976f2b-614d-471e-9b41-4ce06495e5f6
+          Compress: true
+          ViewerProtocolPolicy: allow-all
+          TargetOriginId: !Ref AdventuresOfWilburApiGatewayMethod
+        Origins:
+          - ConnectionAttempts: 3
+            ConnectionTimeout: 10
+            CustomOriginConfig:
+              OriginReadTimeout: 30
+              OriginProtocolPolicy: https-only
+            DomainName: "7rxf8z5z9h.execute-api.eu-west-2.amazonaws.com"
+            OriginPath: "/v0/lambda"
+            Id: !Ref AdventuresOfWilburApiGatewayMethod
+        PriceClass: PriceClass_100
+
   AdventuresOfWilburFunctionRole:
     Type: AWS::IAM::Role
     Properties:
