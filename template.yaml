@@ -218,7 +218,7 @@ Resources:
           CachedMethods:
             - GET
             - HEAD
-          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          CachePolicyId: a932020c-2a9a-4e99-816d-c5d543f324ed
           OriginRequestPolicyId: 95976f2b-614d-471e-9b41-4ce06495e5f6
           Compress: true
           ViewerProtocolPolicy: allow-all
