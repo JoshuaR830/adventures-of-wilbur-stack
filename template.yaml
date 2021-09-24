@@ -21,7 +21,6 @@ Resources:
       Path: '/'
       ManagedPolicyArns:
         - !Sub "arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
-      
 
   AdventuresOfWilburRandomImageFunction:
     Type: AWS::Lambda::Function
@@ -292,3 +291,31 @@ Resources:
               - Effect: Allow
                 Action: 'lambda:InvokeFunction'
                 Resource: '*'
+
+  AdventuresOfWilburOpenSearch:
+    Type: AWS::OpenSearchService::Domain
+    Properties:
+      AccessPolicies:
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "*"
+              },
+              "Action": "es:*",
+              "Resource": "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/adventures-of-wilbur-search/*"
+            }
+          ]
+        }
+      ClusterConfig:
+        InstanceType: t3.small.search
+        InstanceCount: 1
+        DedicatedMasterEnabled: false
+        ZoneAwarenessEnabled: false
+      DomainName: adventures-of-wilbur-search
+      EBSOptions:
+        EBSEnabled: true
+        VolumeSize: 10
+
