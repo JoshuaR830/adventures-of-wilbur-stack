@@ -33,7 +33,7 @@ Resources:
       FunctionName: AdventuresOfWilburRandomImageFunction
       Handler: AdventuresOfWilbur::AdventuresOfWilbur.Function::FunctionHandlerAsync
       Role: !GetAtt AdventuresOfWilburFunctionRole.Arn
-      Runtime: dotnetcore3.1
+      Runtime: dotnet6
       Timeout: 60
 
   AdventuresOfWilburUploadFunction:
@@ -46,7 +46,7 @@ Resources:
       FunctionName: AdventuresOfWilburUploadFunction
       Handler: AdventuresOfWilburUplaodFunction::AdventuresOfWilburUploadFunction.Function::FunctionHandlerAsync
       Role: !GetAtt AdventuresOfWilburFunctionRole.Arn
-      Runtime: dotnetcore3.1
+      Runtime: dotnet6
       Timeout: 60
 
   WilburWednesdayEmailFunction:

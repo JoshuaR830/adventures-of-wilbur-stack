@@ -105,6 +105,7 @@ public class Function
         try
         {
             Console.WriteLine("Sending email using SES");
+            await SESClient.SendEmailAsync(sendRequest);
             Console.WriteLine("Successfully sent");
         } catch (Exception ex)
         {

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Lambda.APIGatewayEvents;

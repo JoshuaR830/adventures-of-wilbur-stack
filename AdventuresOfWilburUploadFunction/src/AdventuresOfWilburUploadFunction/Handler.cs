@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using AdventuresOfWilbur;
+﻿using AdventuresOfWilbur;
 using Amazon.Lambda.APIGatewayEvents;
 using Newtonsoft.Json;
 using System.Drawing;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Amazon.S3;
-using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 
 namespace AdventuresOfWilburUploadFunction

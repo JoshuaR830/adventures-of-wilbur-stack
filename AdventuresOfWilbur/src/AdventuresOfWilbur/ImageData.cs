@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AdventuresOfWilbur
+﻿namespace AdventuresOfWilbur
 {
     public class ImageData
     {
