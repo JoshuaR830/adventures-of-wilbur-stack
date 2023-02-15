@@ -62,7 +62,7 @@ public class Function
             var response = await this.S3Client.GetObjectMetadataAsync(s3Event.Bucket.Name, s3Event.Object.Key);
             Console.WriteLine(JsonSerializer.Serialize(await GetLatestWilburWednesday()));
             var latestWilbur = await GetLatestWilburWednesday();
-            await SendEmail(new EmailItem(latestWilbur));
+            await SendEmail(new EmailItem(latestWilbur, await GetImagePrefix()));
             return response.Headers.ContentType;
         }
         catch(Exception e)
@@ -81,7 +81,8 @@ public class Function
             Source = await GetSenderAddress(),
             Destination = new Destination
             {
-                ToAddresses = await GetToAddresses()
+                BccAddresses = await GetToAddresses(),
+                ToAddresses = new List<string>() { await GetSenderAddress() }
             },
             Message = new Message
             {
@@ -99,11 +100,13 @@ public class Function
                         Data = email.TextBody
                     }
                 }
-            }
+            },
+            ReturnPath = await GetSenderAddress()
         };
 
         try
         {
+            await SESClient.SendEmailAsync(sendRequest);
             Console.WriteLine("Sending email using SES");
             await SESClient.SendEmailAsync(sendRequest);
             Console.WriteLine("Successfully sent");
@@ -135,6 +138,17 @@ public class Function
         });
 
         return fromAddressesResponse.Parameter.Value;
+    }
+
+    private async Task<string> GetImagePrefix()
+    {
+        var imagePrefixResponse = await SimpleSystemsManagementClient.GetParameterAsync(new Amazon.SimpleSystemsManagement.Model.GetParameterRequest
+        {
+            Name = "wilburWednesdayImagePrefix",
+            WithDecryption = false
+        });
+
+        return imagePrefixResponse.Parameter.Value;
     }
 
     private async Task<WilburWednesdayPost> GetLatestWilburWednesday()
